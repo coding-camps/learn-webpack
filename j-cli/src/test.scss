@@ -1,0 +1,14 @@
+.container {
+    display: flex;
+    border: solid 1px blueviolet;
+    width: fit-content;
+    // height: 200px;
+    margin: 20px;
+    .box {
+        border: 1px solid darkred;
+        margin: 10px;
+        width: 100px;
+        height: 100px;
+        background-color: red;
+    }
+}
