@@ -2,7 +2,10 @@ const {merge} = require('webpack-merge');
 const base = require('./webpack.base.js');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 //引入抽取css样式插件
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
+const path = require('path');
+
 module.exports = merge(base, {
     mode: "production",
     devtool: 'source-map',//独立配置源码映射
@@ -37,6 +40,21 @@ module.exports = merge(base, {
         new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
             filename: '[name]-[hash].css'
+        }),
+        new CopyPlugin({
+            patterns: [
+                {
+                    from: path.resolve(__dirname, 'public'),
+                    to: path.resolve(__dirname, 'dist'),
+                    globOptions: {
+                        //忽略index.html防止重名文件
+                        ignore: ['**/index.html']
+                    }
+                },
+            ],
+            options: {
+                concurrency: 100,
+            },
         }),
     ],
 });
